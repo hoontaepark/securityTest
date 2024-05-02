@@ -10,7 +10,7 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    @Bean
+    @Bean//빈등록, 해시암호화임.
     public BCryptPasswordEncoder bCryptPasswordEncoder(){ //Bcrypt 생성자 메소드
         return new BCryptPasswordEncoder(); //자동으로 Bcrypt 만들어줌.
     }
@@ -20,7 +20,7 @@ public class SecurityConfig {
 
         http    //람다식으로 선언, 특정 경로에 요청을 진행함, 인가에 대한 작업
                 .authorizeHttpRequests((auth) -> auth
-                        .requestMatchers("/","/login").permitAll()//특정 경로에 요청을 진행함.
+                        .requestMatchers("/","/login","/LoginProc","/join","/joinProc").permitAll()//특정 경로에 요청을 진행함.
                         .requestMatchers("/admin").hasRole("ADMIN")
                         .requestMatchers("/my/**").hasAnyRole("USER","ADMIN") //유저의 경로는 **와일드카드로 선언.
                         .anyRequest().authenticated() //이외 경로의 대한 처리 로그인한 사용자만 접근할수있도록 authenticated

@@ -3,15 +3,22 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+
+    @Bean
+    public BCryptPasswordEncoder bCryptPasswordEncoder(){ //Bcrypt 생성자 메소드
+        return new BCryptPasswordEncoder(); //자동으로 Bcrypt 만들어줌.
+    }
+
     @Bean //시큐리티 필터체인 빈 등록
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
 
-        http    //람다식으로 선언, 특정 경로에 요청을 진행함.
+        http    //람다식으로 선언, 특정 경로에 요청을 진행함, 인가에 대한 작업
                 .authorizeHttpRequests((auth) -> auth
                         .requestMatchers("/","/login").permitAll()//특정 경로에 요청을 진행함.
                         .requestMatchers("/admin").hasRole("ADMIN")

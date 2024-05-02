@@ -18,6 +18,10 @@ public class JoinService {
     public void joinProcess(JoinDto joinDto){
 
         //DB에 이미 동일한 password가 존재하는지 검증해야함. 리포지토리에 검증.
+        boolean isUser = userRepository.existsByUsername(joinDto.getUsername());
+        if (isUser){
+            return;
+        }
 
         UserEntity data = new UserEntity();
         data.setUsername(joinDto.getUsername());

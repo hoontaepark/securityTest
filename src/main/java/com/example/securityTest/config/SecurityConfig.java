@@ -35,7 +35,23 @@ public class SecurityConfig {
         http
                 .csrf((auth)->auth.disable()); //csrf 잠깐 disable 시킴
 
+        http
+                .sessionManagement((auth)->auth
+                        .maximumSessions(1) //다중로그인 갯수
+                        .maxSessionsPreventsLogin(true));//다중로그인 갯수 초과했을경우 true로 하면 새로운 로그인 제한,
+                                                        // false 하면 세션 하나 삭제하고 로그인시킴
+        http
+                .sessionManagement((auth)->auth
+                                .sessionFixation().changeSessionId()//세션고정보호
+                        //세션 고정공격 보호를 위한 설정
+                );
+                //.none:로그인 시 세션 정보 변경안함 .newSession:로그인 시 세션 새로생성
+                //.changeSessionId:로그인 시 동일한 세션에 대한 id변경
+
+
         return http.build(); //리턴값으로 http리턴.
+
+
 
 
     }

@@ -48,6 +48,10 @@ public class SecurityConfig {
                 //.none:로그인 시 세션 정보 변경안함 .newSession:로그인 시 세션 새로생성
                 //.changeSessionId:로그인 시 동일한 세션에 대한 id변경
 
+        http
+                .logout((auth)->auth.logoutUrl("/logout")
+                        .logoutSuccessUrl("/")); //로그아웃 경로 설정.
+
 
         return http.build(); //리턴값으로 http리턴.
 
